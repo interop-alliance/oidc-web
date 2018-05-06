@@ -1,12 +1,7 @@
-# oidc-web
-OIDC (OpenID Connect) authentication client for web browsers (Relying Party wrapper)
-
-
 # OpenID Connect Web Client _(@trust/oidc-web)_
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-[![Build Status](https://travis-ci.org/anvilresearch/oidc-web.svg?branch=master)](https://travis-ci.org/anvilresearch/oidc-web)
-[![codecov](https://codecov.io/gh/anvilresearch/oidc-web/branch/master/graph/badge.svg)](https://codecov.io/gh/anvilresearch/oidc-web)
+[![Build Status](https://travis-ci.org/solid/oidc-web.svg?branch=master)](https://travis-ci.org/solid/oidc-web)
+[![codecov](https://codecov.io/gh/solid/oidc-web/branch/master/graph/badge.svg)](https://codecov.io/gh/solid/oidc-web)
 
 >  OIDC (OpenID Connect) authentication client for web browsers (Relying Party wrapper)
 
@@ -59,7 +54,7 @@ auth.currentSession()
 ### Install
 
 ```bash
-git clone https://github.com/anvilresearch/oidc-web.git
+git clone https://github.com/solid/oidc-web.git
 cd oidc-web
 npm install
 ```
@@ -82,7 +77,7 @@ $ npm run coverage
 
 ### Issues
 
-* please file [issues](https://github.com/anvilresearch/oidc-web/issues) :)
+* please file [issues](https://github.com/solid/oidc-web/issues) :)
 * for bug reports, include relevant details such as platform, version, relevant data, and stack traces
 * be sure to check for existing issues before opening new ones
 * read the documentation before asking questions
@@ -115,23 +110,16 @@ $ npm run coverage
 * required before merging PRs
 * reviewers MUST run and test the code under review
 
-### Collaborating
-
-This project is part of a greater group of projects visible [here](https://www.npmjs.com/org/trust) at the @trust organisation on NPM.
-
-#### Pair programming
-
-* Required for new contributors
-* Work directly with one or more members of the core development team
-
 ### Code of conduct
 
-* @trust/model follows the [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
+This project follows the
+[Contributor Covenant](https://www.contributor-covenant.org/version/1/4/code-of-conduct)
+Code of Conduct.
 
 ## Maintainers
 
-* [@dmitrizagidulin](https://github.com/dmitrizagidulin)
+* [Dmitri Zagidulin](https://github.com/dmitrizagidulin)
 
 ## License
 
-MIT © 2017 MIT Trust Consortium
+[MIT](LICENSE)

@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anvilresearch/oidc-web"
+    "url": "https://github.com/solid/oidc-web"
   },
   "keywords": [
     "authentication",
@@ -48,9 +48,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/anvilresearch/oidc-web/issues"
+    "url": "https://github.com/solid/oidc-web/issues"
   },
-  "homepage": "https://github.com/anvilresearch/oidc-web",
+  "homepage": "https://github.com/solid/oidc-web",
   "contributors": [
     {
       "name": "Dmitri Zagidulin",
@@ -69,11 +69,11 @@
     "dirty-chai": "^2.0.1",
     "jsdoc": "^3.5.5",
     "localstorage-memory": "^1.0.2",
-    "mocha": "^3.5.3",
+    "mocha": "^5.1.1",
     "nyc": "^11.2.1",
-    "sinon": "^3.3.0",
-    "sinon-chai": "^2.14.0",
-    "standard": "^10.0.3",
+    "sinon": "^5.0.4",
+    "sinon-chai": "^3.0.0",
+    "standard": "^11.0.1",
     "webpack": "^3.6.0",
     "whatwg-url": "^6.2.1"
   },
