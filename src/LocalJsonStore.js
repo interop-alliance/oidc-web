@@ -21,11 +21,11 @@ class LocalJsonStore {
     return Promise.resolve()
       .then(() => {
         if (!this.className) {
-          return contents  // resolve with raw JSON
+          return contents // resolve with raw JSON
         }
 
         if (contents) {
-          return this.className.from(contents || {})  // resolve with instance
+          return this.className.from(contents || {}) // resolve with instance
         } else {
           return null
         }
@@ -44,7 +44,7 @@ class LocalJsonStore {
 
     this.store.setItem(key, contents)
 
-    return Promise.resolve(value)  // async only to match get()
+    return Promise.resolve(value) // async only to match get()
   }
 
   clear () {

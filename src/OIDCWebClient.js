@@ -26,7 +26,7 @@ class OIDCWebClient {
    * @param options.store {LocalStorage} Storage to pass to RP instances
    */
   constructor (options = {}) {
-    this.popToken = options.popToken || options.solid  // accept 'solid' alias
+    this.popToken = options.popToken || options.solid // accept 'solid' alias
 
     this.defaults = options.defaults || {}
 
@@ -45,7 +45,7 @@ class OIDCWebClient {
    * @returns {Promise<Session>}
    */
   currentSession () {
-    return this.session.get()  // try loading a saved session
+    return this.session.get() // try loading a saved session
 
       // If no session, attempt to parse it from authentication response
       .then(session => {
@@ -116,7 +116,7 @@ class OIDCWebClient {
       .then(session => {
         this.browser.clearAuthResponseFromUrl()
 
-        return this.session.save(session)  // returns session
+        return this.session.save(session) // returns session
       })
 
       .catch(error => {
@@ -213,7 +213,7 @@ class OIDCWebClient {
       .then(authUri => {
         let state = this.browser.stateFromUri(authUri, QUERY)
 
-        this.providers.save(state, providerUri)  // save provider by state
+        this.providers.save(state, providerUri) // save provider by state
 
         return this.browser.redirectTo(authUri)
       })

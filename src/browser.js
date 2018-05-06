@@ -37,9 +37,9 @@ function clearAuthResponseFromUrl () {
 function currentLocationNoAuth () {
   let currentUrl = new URL(currentLocation())
 
-  if (!currentUrl.hash) { return currentUrl.toString() }  // nothing needs to be done
+  if (!currentUrl.hash) { return currentUrl.toString() } // nothing needs to be done
 
-  let hashFragments = currentUrl.hash.slice(1)  // drop leading #
+  let hashFragments = currentUrl.hash.slice(1) // drop leading #
 
   hashFragments = hashFragments.split('&')
 
