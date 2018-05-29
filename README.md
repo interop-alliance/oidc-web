@@ -22,13 +22,13 @@ Authentication client for use in browser-based JS applications.
 ## Install
 
 ```
-$ npm install @trust/oidc-web
+$ npm install oidc-web
 ```
 
 ## Usage
 
 ```js
-const { OIDCWebClient } = require('@trust/oidc-web')
+const { OIDCWebClient } = require('oidc-web')
 
 let auth = new OIDCWebClient({})
 
