@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solid Auth Demo App</title>
+  <!-- Bootstrap CSS and Theme for demo purposes -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="./oidc-web.min.js"></script>
+
+  <style>
+    body {
+      margin-bottom: 3em;
+    }
+    #noWebId {
+      margin: 0px 2em;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div>
+    <h3>Solid Auth Demo Page</h3>
+  </div>
+  <!--<div class="demo-section" style="width: 100%;">-->
+    <!--<p>Login, invoked by itself, will open a default Provider Select popup window.</p>-->
+  <!--</div>-->
+  <div class="row">
+    <div class="col-md-3"><strong>Current WebID:</strong></div>
+    <div class="col-md-9">
+      <code id="webId"></code>  <!-- Display WebID, if applicable -->
+
+      <!-- display this section if not logged in, hide it after login -->
+      <span id="noWebId">Not logged in</span>
+      <button type="button" id="login" class="btn btn-primary btn-md">Login</button>
+
+      <!-- After logging in, show the 'Log out' button -->
+      <span id="logoutDiv" class="hidden">
+        <button type="button" id="logoutBtn" class="btn btn-primary btn-xs">Log out</button>
+      </span>
+    </div>
+  </div>
+  <br /><br />
+  <div class="row" id="getRootAclDiv" class="hidden">
+    <div class="col-md-2">
+      <button type="button" id="getRootAcl" class="btn btn-primary btn-md">
+        Get Root .acl
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <code id="rootAclContents" class="hidden"></code>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+  // Lib is exported as window.OIDC
+  const { OIDCWebClient } = OIDC
+  const options = { solid: true }
+  const authClient = new OIDCWebClient(options)
+  // auth is now a client instance
+
+  const demoIssuer = 'https://solidtest.space'
+
+  // Script globals, for convenience
+  let fetch, webId
+
+  /**
+   * Gets called when the page loads
+   */
+  document.addEventListener('DOMContentLoaded', async () => {
+    initDemoButtons()
+
+    // Check if user is already logged in
+    const session = await authClient.currentSession()
+    console.log('authClient.currentSession():', session)
+    fetch = session.fetch
+
+    displaySessionState(session)
+  })
+
+  // This is bound to the Login button in initDemoButtons()
+  async function login () {
+    let session
+    try {
+      session = await authClient.login(demoIssuer)
+      fetch = session.fetch
+    } catch (error) {
+      console.log('Error logging in:')
+      console.error(error)
+      console.log('Make sure this demo is served via HTTPS, otherwise browser will block it')
+    }
+  }
+
+  function logout () {
+    console.log('Logging out...')
+    authClient.logout()
+  }
+
+  /**
+   * App/UI logic. This would normally done in React, Ember, Vue, etc.
+   */
+  function initDemoButtons () {
+    initButton('getRootAcl', getRootAcl)
+    initButton('logoutBtn', logout)
+    initButton('login', login)
+  }
+
+  function initButton(id, action) {
+    document.getElementById(id).addEventListener('click', action)
+  }
+
+  function displaySessionState (session) {
+    if (!session.hasCredentials()) {
+      hide('webId')
+      hide('getRootAclDiv')
+//      console.log('Empty session, redirecting to login')
+//      auth.login(demoIssuer)
+    } else {
+      webId = session.idClaims.sub
+      hide('noWebId')
+      hide('login')
+      show('logoutDiv')
+      if (webId) {
+        setField('webId', webId)
+      }
+      show('getRootAclDiv')
+//      console.log('hasCredentials() === true')
+    }
+  }
+
+  function loginSuccess (webId) {
+    console.log('onLoginSuccess() callback! webId: ', webId)
+    hide('noWebId')
+    show('logoutDiv')
+    if (webId) {
+      setField('webId', webId)
+    }
+    show('getRootAclDiv')
+  }
+
+  async function getRootAcl () {
+    if (!webId) {
+      setFieldText('rootAclContents', '')
+      console.log('Cannot fetch root acl - user not signed in')
+      return
+    }
+    const aclUri = rootAclUri(webId)
+    console.log('Fetching root acl: ', aclUri)
+
+    const response = await fetch(aclUri)
+    if (!response.ok) {
+      console.error('Error fetching ACL:', response)
+    }
+
+    const contents = await response.text()
+    show('rootAclContents')
+    setFieldText('rootAclContents', contents)
+  }
+
+  function rootAclUri (webId) {
+    var uri = new URL(webId)
+    uri.pathname = '/.acl'
+    uri.hash = ''
+    return uri.href
+  }
+
+  /**
+   * App-specific util functions, ignore.
+   */
+  function setField (id, value) {
+    var field = document.getElementById(id)
+    if (field) {
+      field.innerHTML = value
+    }
+  }
+  function setFieldText (id, value) {
+    var field = document.getElementById(id)
+    if (field) {
+      field.innerText = value
+    }
+  }
+  function hide (id) {
+    document.getElementById(id).className = 'hidden'
+  }
+  function show (id) {
+    var div = document.getElementById(id)
+    div.className = div.className.replace('hidden', '')
+  }
+</script>
+</html>
