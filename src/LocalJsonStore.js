@@ -7,7 +7,7 @@ class LocalJsonStore {
     this.store = options.store || global.localStorage
   }
 
-  get (key) {
+  async get (key) {
     key = key ? `${this.namespace}.${key}` : this.namespace
 
     let contents = this.store.getItem(key)
@@ -32,7 +32,7 @@ class LocalJsonStore {
       })
   }
 
-  save (key, value) {
+  async save (key, value) {
     if (!value) {
       value = key
       key = this.namespace

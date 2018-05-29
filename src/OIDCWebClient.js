@@ -44,18 +44,10 @@ class OIDCWebClient {
   /**
    * @returns {Promise<Session>}
    */
-  currentSession () {
-    return this.session.get() // try loading a saved session
-
-      // If no session, attempt to parse it from authentication response
-      .then(session => {
-        return session || this.sessionFromResponse()
-      })
-
-      // Failing that, return an empty session
-      .then(session => {
-        return session || Session.from({})
-      })
+  async currentSession () {
+    return await this.session.get() || // try loading a saved session
+      await this.sessionFromResponse() || // or parse it from auth response
+      Session.from({}) // failing that, return an empty session
   }
 
   /**
@@ -65,13 +57,10 @@ class OIDCWebClient {
    *
    * @returns {Promise} Currently ends in a window redirect
    */
-  login (provider, options = {}) {
-    return Promise.resolve(provider)
-      // .then(provider => provider || this.selectProviderUI())
+  async login (provider, options = {}) {
+    const rp = await this.rpFor(provider, options)
 
-      .then(provider => this.rpFor(provider, options))
-
-      .then(rp => this.sendAuthRequest(rp))
+    await this.sendAuthRequest(rp)
   }
 
   logout () {
@@ -90,40 +79,31 @@ class OIDCWebClient {
    *
    * @returns {Promise<Session|null>}
    */
-  sessionFromResponse () {
+  async sessionFromResponse () {
     if (!this.browser.currentUriHasAuthResponse()) {
-      return Promise.resolve(null)
+      return null
     }
 
     let responseUri = this.browser.currentLocation()
 
     let state = this.browser.stateFromUri(responseUri)
 
-    return this.providers.get(state)
+    const provider = await this.providers.get(state)
+    if (!provider) {
+      throw new Error('Could not load provider uri from response state param')
+    }
 
-      .then(provider => {
-        if (!provider) {
-          throw new Error('Could not load provider uri from response state param')
-        }
+    try {
+      const rp = await this.rpFor(provider)
 
-        return this.rpFor(provider)
-      })
+      const session = await rp.validateResponse(responseUri, this.store)
+      this.browser.clearAuthResponseFromUrl()
 
-      .then(rp => {
-        return rp.validateResponse(responseUri, this.store)
-      })
-
-      .then(session => {
-        this.browser.clearAuthResponseFromUrl()
-
-        return this.session.save(session) // returns session
-      })
-
-      .catch(error => {
-        console.log(error)
-
-        return null
-      })
+      return await this.session.save(session) // returns session
+    } catch (error) {
+      console.error('Error determining current session:', error)
+      return null
+    }
   }
 
   /**
@@ -140,9 +120,9 @@ class OIDCWebClient {
    *
    * @returns {Promise<RelyingParty>}
    */
-  rpFor (provider, options = {}) {
-    return this.clients.get(provider)
-      .then(rp => rp || this.register(provider, options))
+  async rpFor (provider, options = {}) {
+    const rp = await this.clients.get(provider)
+    return rp || this.register(provider, options)
   }
 
   /**
@@ -153,9 +133,9 @@ class OIDCWebClient {
    * @param options
    * @returns {Promise<RelyingParty>}
    */
-  register (provider, options) {
-    return this.registerPublicClient(provider, options)
-      .then(rp => this.clients.save(provider, rp))
+  async register (provider, options) {
+    const rp = await this.registerPublicClient(provider, options)
+    return this.clients.save(provider, rp)
   }
 
   /**
@@ -163,7 +143,7 @@ class OIDCWebClient {
    * @param options
    * @returns {Promise<RelyingParty>}
    */
-  registerPublicClient (provider, options = {}) {
+  async registerPublicClient (provider, options = {}) {
     provider = provider || options.issuer
     let redirectUri = options['redirect_uri'] || this.browser.currentLocation()
 
@@ -195,7 +175,7 @@ class OIDCWebClient {
    * @param rpOptions
    * @returns {Promise<RelyingParty>}
    */
-  registerClient (provider, registration, rpOptions) {
+  async registerClient (provider, registration, rpOptions) {
     return RelyingParty.register(provider, registration, rpOptions)
   }
 
@@ -204,19 +184,17 @@ class OIDCWebClient {
    *
    * @return {Promise}
    */
-  sendAuthRequest (rp) {
+  async sendAuthRequest (rp) {
     let options = {}
     let providerUri = rp.provider.url
 
-    return rp.createRequest(options, this.store)
+    const authUri = await rp.createRequest(options, this.store)
 
-      .then(authUri => {
-        let state = this.browser.stateFromUri(authUri, QUERY)
+    let state = this.browser.stateFromUri(authUri, QUERY)
 
-        this.providers.save(state, providerUri) // save provider by state
+    await this.providers.save(state, providerUri) // save provider by state
 
-        return this.browser.redirectTo(authUri)
-      })
+    return this.browser.redirectTo(authUri)
   }
 }
 

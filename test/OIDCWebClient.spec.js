@@ -57,7 +57,7 @@ describe('OIDCWebClient', () => {
   })
 
   describe('registerPublicClient', () => {
-    var auth
+    let auth
     const redirectUri = 'https://app.com/callback'
 
     const options = {
@@ -92,14 +92,14 @@ describe('OIDCWebClient', () => {
       auth.registerClient = sinon.stub().resolves()
     })
 
-    it('should construct a default rp registration and options', () => {
-      return auth.registerPublicClient(provider, options)
-        .then(() => {
-          expect(auth.registerClient).to.have.been.calledWith(provider, expectedRegistration, expectedRpOptions)
-        })
+    it('should construct a default rp registration and options', async () => {
+      await auth.registerPublicClient(provider, options)
+
+      expect(auth.registerClient).to.have.been
+        .calledWith(provider, expectedRegistration, expectedRpOptions)
     })
 
-    it('should default the redirectUri to the current location', () => {
+    it('should default the redirectUri to the current location', async () => {
       auth.browser.currentLocation = sinon.stub().returns(currentLocation)
 
       const expectedRegistration = {
@@ -121,10 +121,10 @@ describe('OIDCWebClient', () => {
         }
       }
 
-      return auth.registerPublicClient(provider, {})
-        .then(() => {
-          expect(auth.registerClient).to.have.been.calledWith(provider, expectedRegistration, expectedRpOptions)
-        })
+      await auth.registerPublicClient(provider, {})
+
+      expect(auth.registerClient).to.have.been
+        .calledWith(provider, expectedRegistration, expectedRpOptions)
     })
   })
 
