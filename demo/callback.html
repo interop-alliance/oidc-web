@@ -7,7 +7,8 @@
     window.addEventListener('load', function () {
       var callbackUrl = window.location.href
       var opener = window.opener
-      var pageOrigin = opener.location.origin
+//      var pageOrigin = opener.location.origin
+      var pageOrigin = 'http://127.0.0.1:8080/'
 
       var message = {
         event_type: 'authCallback',
@@ -15,7 +16,7 @@
       }
 
       opener.postMessage(message, pageOrigin)
-      window.close()
+//      window.close()
     })
   </script>
 </head>

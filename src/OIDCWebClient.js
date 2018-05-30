@@ -7,6 +7,8 @@ const storage = require('./storage')
 // URI parameter types
 const { QUERY } = require('./browser')
 
+const DEFAULT_UI_MODE = 'popup'
+
 class OIDCWebClient {
   /**
    * @constructor
@@ -51,16 +53,39 @@ class OIDCWebClient {
   }
 
   /**
-   * @param provider {string} Provider URI
-   *
    * @param [options={}] {object}
+   *
+   * @param [options.provider] {string} Provider URI
+   * @param [options.mode=DEFAULT_UI_MODE] {string} UI mode, popup or redirect
+   *
+   * @returns {Promise}
+   */
+  async login (options = {}) {
+    switch (options.mode || DEFAULT_UI_MODE) {
+      case 'redirect':
+        return this.redirectTo(options)
+      case 'popup':
+        return this.loginPopup(options)
+    }
+  }
+
+  /**
+   * @param options {object}
+   *
+   * @param options.provider {string} Provider URI
    *
    * @returns {Promise} Currently ends in a window redirect
    */
-  async login (provider, options = {}) {
-    const rp = await this.rpFor(provider, options)
+  async redirectTo (options) {
+    if (!options.provider) {
+      throw new Error('Missing provider argument for redirectTo()')
+    }
+    const rp = await this.rpFor(options.provider, options)
+    return this.sendAuthRequest(rp)
+  }
 
-    await this.sendAuthRequest(rp)
+  async loginPopup (options) {
+    this.browser.openLoginPopup()
   }
 
   logout () {

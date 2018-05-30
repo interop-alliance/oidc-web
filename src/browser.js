@@ -1,6 +1,7 @@
 'use strict'
 
 const { URL } = require('whatwg-url')
+const POPUP_SOURCE = require('./popup')
 
 // URI parameter types
 const HASH = 'hash'
@@ -14,6 +15,7 @@ module.exports = {
   stateFromUri,
   redirectTo,
   replaceCurrentUrl,
+  openLoginPopup,
   HASH,
   QUERY
 }
@@ -139,4 +141,39 @@ function redirectTo (uri) {
   window.location.href = uri
 
   return false
+}
+
+/**
+ * Opens a Select Provider popup window, initializes events.
+ */
+function openLoginPopup () {
+  // this.debug('Getting provider from default popup UI')
+  // this.initEventListeners(this.window)
+
+  const popup = window.open('./login.html',
+    'selectProviderWindow',
+    'menubar=no,resizable=yes,width=400,height=400'
+  )
+
+  // const popup = window.open('',
+  //   'selectProviderWindow',
+  //   'menubar=no,resizable=yes,width=400,height=400'
+  // )
+
+  // popup.document.write(POPUP_SOURCE)
+  // popup.document.close()
+
+  // if (this.selectProviderWindow) {
+  //   // Popup has already been opened
+  //   this.selectProviderWindow.focus()
+  // } else {
+  //   // Open a new Provider Select popup window
+  //   this.selectProviderWindow = this.window.open('',
+  //     'selectProviderWindow',
+  //     'menubar=no,resizable=yes,width=400,height=400'
+  //   )
+  //
+  //   this.selectProviderWindow.document.write(POPUP_SOURCE)
+  //   this.selectProviderWindow.document.close()
+  // }
 }

@@ -62,7 +62,7 @@
   const authClient = new OIDCWebClient(options)
   // auth is now a client instance
 
-  const demoIssuer = 'https://solidtest.space'
+  const demoProvider = 'https://solidtest.space'
 
   // Script globals, for convenience
   let fetch, webId
@@ -85,8 +85,8 @@
   async function login () {
     let session
     try {
-      session = await authClient.login(demoIssuer)
-      fetch = session.fetch
+      session = await authClient.login({})
+      fetch = session && session.fetch
     } catch (error) {
       console.log('Error logging in:')
       console.error(error)
@@ -116,8 +116,6 @@
     if (!session.hasCredentials()) {
       hide('webId')
       hide('getRootAclDiv')
-//      console.log('Empty session, redirecting to login')
-//      auth.login(demoIssuer)
     } else {
       webId = session.idClaims.sub
       hide('noWebId')
