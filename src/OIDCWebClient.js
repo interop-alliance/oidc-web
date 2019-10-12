@@ -1,7 +1,7 @@
 'use strict'
 
-const RelyingParty = require('@trust/oidc-rp')
-const Session = require('@trust/oidc-rp/lib/Session')
+const RelyingParty = require('@solid/oidc-rp')
+const Session = require('@solid/oidc-rp/lib/Session')
 const storage = require('./storage')
 
 // URI parameter types
@@ -81,7 +81,8 @@ class OIDCWebClient {
       throw new Error('Missing provider argument for redirectTo()')
     }
     const rp = await this.rpFor(options.provider, options)
-    return this.sendAuthRequest(rp)
+    const authUri = await this.prepareAuthRequest({ rp })
+    return this.browser.redirectTo(authUri)
   }
 
   async loginPopup (options) {
@@ -207,9 +208,12 @@ class OIDCWebClient {
   /**
    * @param rp {RelyingParty}
    *
-   * @return {Promise}
+   * @return {Promise<string>}
    */
-  async sendAuthRequest (rp) {
+  async prepareAuthRequest ({ provider, rp }) {
+    if (!rp) {
+      rp = await this.rpFor(provider)
+    }
     let options = {}
     let providerUri = rp.provider.url
 
@@ -218,8 +222,7 @@ class OIDCWebClient {
     let state = this.browser.stateFromUri(authUri, QUERY)
 
     await this.providers.save(state, providerUri) // save provider by state
-
-    return this.browser.redirectTo(authUri)
+    return authUri
   }
 }
 

@@ -1,7 +1,7 @@
 'use strict'
 
 const { URL } = require('whatwg-url')
-const POPUP_SOURCE = require('./popup')
+// const POPUP_SOURCE = require('./popup')
 
 // URI parameter types
 const HASH = 'hash'
@@ -150,10 +150,10 @@ function openLoginPopup () {
   // this.debug('Getting provider from default popup UI')
   // this.initEventListeners(this.window)
 
-  const popup = window.open('./login.html',
-    'selectProviderWindow',
-    'menubar=no,resizable=yes,width=400,height=400'
-  )
+  // const popup = window.open('./login.html',
+  //   'selectProviderWindow',
+  //   'menubar=no,resizable=yes,width=400,height=400'
+  // )
 
   // const popup = window.open('',
   //   'selectProviderWindow',

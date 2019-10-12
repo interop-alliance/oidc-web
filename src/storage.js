@@ -1,8 +1,8 @@
 'use strict'
 
-const RelyingParty = require('@trust/oidc-rp')
+const RelyingParty = require('@solid/oidc-rp')
 const LocalJsonStore = require('./LocalJsonStore')
-const Session = require('@trust/oidc-rp/lib/Session')
+const Session = require('@solid/oidc-rp/lib/Session')
 
 module.exports = {
   defaultClientStore,

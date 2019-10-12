@@ -1,4 +1,4 @@
-# OpenID Connect Web Client _(@trust/oidc-web)_
+# OpenID Connect Web Client _(oidc-web)_
 
 [![Build Status](https://travis-ci.org/solid/oidc-web.svg?branch=master)](https://travis-ci.org/solid/oidc-web)
 [![codecov](https://codecov.io/gh/solid/oidc-web/branch/master/graph/badge.svg)](https://codecov.io/gh/solid/oidc-web)
@@ -73,42 +73,7 @@ $ npm run coverage
 
 ## API
 
-## Contribute
-
-### Issues
-
-* please file [issues](https://github.com/solid/oidc-web/issues) :)
-* for bug reports, include relevant details such as platform, version, relevant data, and stack traces
-* be sure to check for existing issues before opening new ones
-* read the documentation before asking questions
-* it's strongly recommended to open an issue before hacking and submitting a PR
-* we reserve the right to close an issue for excessive bikeshedding
-
-### Pull requests
-
-#### Policy
-
-* we're not presently accepting *unsolicited* pull requests
-* create an issue to discuss proposed features before submitting a pull request
-* create an issue to propose changes of code style or introduce new tooling
-* ensure your work is harmonious with the overall direction of the project
-* ensure your work does not duplicate existing effort
-* keep the scope compact; avoid PRs with more than one feature or fix
-* code review with maintainers is required before any merging of pull requests
-* new code must respect the style guide and overall architecture of the project
-* be prepared to defend your work
-
-#### Style guide
-
-* [Conventional Changelog](https://github.com/bcoe/conventional-changelog-standard/blob/master/convention.md)
-* Standard JavaScript (and corresponding editor configs)
-* ES6
-* jsdocs
-
-#### Code reviews
-
-* required before merging PRs
-* reviewers MUST run and test the code under review
+tbd
 
 ### Code of conduct
 
