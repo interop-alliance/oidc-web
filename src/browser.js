@@ -25,7 +25,7 @@ module.exports = {
  * the current url's hash fragment.
  */
 function clearAuthResponseFromUrl () {
-  let clearedUrl = currentLocationNoAuth()
+  const clearedUrl = currentLocationNoAuth()
 
   replaceCurrentUrl(clearedUrl)
 }
@@ -37,7 +37,7 @@ function clearAuthResponseFromUrl () {
  * @returns {string}
  */
 function currentLocationNoAuth () {
-  let currentUrl = new URL(currentLocation())
+  const currentUrl = new URL(currentLocation())
 
   if (!currentUrl.hash) { return currentUrl.toString() } // nothing needs to be done
 
@@ -45,12 +45,12 @@ function currentLocationNoAuth () {
 
   hashFragments = hashFragments.split('&')
 
-  let authParams = [
+  const authParams = [
     'id_token', 'access_token', 'state', 'token_type', 'expires_in'
   ]
 
   hashFragments = hashFragments.filter(f => {
-    let fragmentKey = f.split('=')[0]
+    const fragmentKey = f.split('=')[0]
     return !authParams.includes(fragmentKey)
   })
 
@@ -79,8 +79,8 @@ function currentLocation () {
  * @returns {boolean}
  */
 function currentUriHasAuthResponse () {
-  let currentUri = currentLocation()
-  let stateParam = stateFromUri(currentUri, HASH)
+  const currentUri = currentLocation()
+  const stateParam = stateFromUri(currentUri, HASH)
 
   return !!stateParam
 }
@@ -96,12 +96,12 @@ function currentUriHasAuthResponse () {
 function stateFromUri (uri, uriType = HASH) {
   if (!uri) { return null }
 
-  let uriObj = new URL(uri)
+  const uriObj = new URL(uri)
   let state
 
   if (uriType === HASH) {
-    let hash = uriObj.hash || '#'
-    let params = new URLSearchParams(hash.substr(1))
+    const hash = uriObj.hash || '#'
+    const params = new URLSearchParams(hash.substr(1))
     state = params.get('state')
   }
 
@@ -121,7 +121,7 @@ function stateFromUri (uri, uriType = HASH) {
 function replaceCurrentUrl (newUrl) {
   if (typeof window === 'undefined') { return null }
 
-  let history = window.history
+  const history = window.history
 
   if (!history) { return null }
 

@@ -40,7 +40,7 @@ class LocalJsonStore {
       key = key ? `${this.namespace}.${key}` : this.namespace
     }
 
-    let contents = JSON.stringify(value)
+    const contents = JSON.stringify(value)
 
     this.store.setItem(key, contents)
 

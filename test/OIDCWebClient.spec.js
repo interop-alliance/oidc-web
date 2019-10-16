@@ -35,7 +35,7 @@ describe('OIDCWebClient', () => {
 
   describe('constructor', () => {
     it('initializes defaults and stores', () => {
-      let auth = new OIDCWebClient({ provider, clients, session, defaults })
+      const auth = new OIDCWebClient({ provider, clients, session, defaults })
 
       expect(auth.provider).to.equal(provider)
       expect(auth.clients).to.equal(clients)
@@ -44,13 +44,13 @@ describe('OIDCWebClient', () => {
     })
 
     it('accepts a provider option', () => {
-      let auth = new OIDCWebClient({ provider })
+      const auth = new OIDCWebClient({ provider })
 
       expect(auth.provider).to.equal(provider)
     })
 
     it('uses defaults.issuer if no provider passed in', () => {
-      let auth = new OIDCWebClient({ defaults: { issuer: provider } })
+      const auth = new OIDCWebClient({ defaults: { issuer: provider } })
 
       expect(auth.provider).to.equal(provider)
     })
@@ -68,7 +68,7 @@ describe('OIDCWebClient', () => {
     const expectedRegistration = {
       issuer: provider,
       grant_types: ['implicit'],
-      redirect_uris: [ redirectUri ],
+      redirect_uris: [redirectUri],
       response_types: ['id_token token'],
       scope: 'openid profile'
     }
@@ -105,7 +105,7 @@ describe('OIDCWebClient', () => {
       const expectedRegistration = {
         issuer: provider,
         grant_types: ['implicit'],
-        redirect_uris: [ currentLocation ],
+        redirect_uris: [currentLocation],
         response_types: ['id_token token'],
         scope: 'openid profile'
       }

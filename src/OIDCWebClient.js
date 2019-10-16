@@ -110,9 +110,9 @@ class OIDCWebClient {
       return null
     }
 
-    let responseUri = this.browser.currentLocation()
+    const responseUri = this.browser.currentLocation()
 
-    let state = this.browser.stateFromUri(responseUri)
+    const state = this.browser.stateFromUri(responseUri)
 
     const provider = await this.providers.get(state)
     if (!provider) {
@@ -171,17 +171,17 @@ class OIDCWebClient {
    */
   async registerPublicClient (provider, options = {}) {
     provider = provider || options.issuer
-    let redirectUri = options['redirect_uri'] || this.browser.currentLocation()
+    const redirectUri = options.redirect_uri || this.browser.currentLocation()
 
-    let registration = {
+    const registration = {
       issuer: provider,
-      grant_types: options['grant_types'] || ['implicit'],
-      redirect_uris: [ redirectUri ],
-      response_types: options['response_types'] || ['id_token token'],
-      scope: options['scope'] || 'openid profile'
+      grant_types: options.grant_types || ['implicit'],
+      redirect_uris: [redirectUri],
+      response_types: options.response_types || ['id_token token'],
+      scope: options.scope || 'openid profile'
     }
 
-    let rpOptions = {
+    const rpOptions = {
       defaults: {
         popToken: this.popToken,
         authenticate: {
@@ -214,12 +214,12 @@ class OIDCWebClient {
     if (!rp) {
       rp = await this.rpFor(provider)
     }
-    let options = {}
-    let providerUri = rp.provider.url
+    const options = {}
+    const providerUri = rp.provider.url
 
     const authUri = await rp.createRequest(options, this.store)
 
-    let state = this.browser.stateFromUri(authUri, QUERY)
+    const state = this.browser.stateFromUri(authUri, QUERY)
 
     await this.providers.save(state, providerUri) // save provider by state
     return authUri

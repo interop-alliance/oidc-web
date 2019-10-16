@@ -28,14 +28,14 @@ describe('browser', () => {
     })
 
     it('should preserve the current url with a hash fragment', () => {
-      let currentLocation = 'https://app.com/#test'
+      const currentLocation = 'https://app.com/#test'
       global.window.location.href = currentLocation
 
       expect(browser.currentLocationNoAuth()).to.equal(currentLocation)
     })
 
     it('should filter out auth-related hash fragments', () => {
-      let currentLocation = 'https://app.com/#test' +
+      const currentLocation = 'https://app.com/#test' +
         '&id_token=idt0ken&access_token=acce$$&state=state123' +
         '&token_type=bearer&expires_in=1234'
 
@@ -45,7 +45,7 @@ describe('browser', () => {
     })
 
     it('should clear the hash fragments if only auth-related ones present', () => {
-      let currentLocation = 'https://app.com/#' +
+      const currentLocation = 'https://app.com/#' +
         '&id_token=idt0ken&access_token=acce$$&state=state123' +
         '&token_type=bearer&expires_in=1234'
 
