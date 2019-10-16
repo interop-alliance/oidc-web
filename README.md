@@ -1,7 +1,7 @@
 # OpenID Connect Web Client _(oidc-web)_
 
 [![Build Status](https://travis-ci.org/solid/oidc-web.svg?branch=master)](https://travis-ci.org/solid/oidc-web)
-[![codecov](https://codecov.io/gh/solid/oidc-web/branch/master/graph/badge.svg)](https://codecov.io/gh/solid/oidc-web)
+[![codecov](https://codecov.io/gh/solid/oidc-web/branch/master/graph/badge.svg)](https://codecov.io/gh/solid/oidc-web) [![Greenkeeper badge](https://badges.greenkeeper.io/interop-alliance/oidc-web.svg)](https://greenkeeper.io/)
 
 >  OIDC (OpenID Connect) authentication client for web browsers (Relying Party wrapper)
 
