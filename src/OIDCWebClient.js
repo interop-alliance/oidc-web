@@ -1,7 +1,7 @@
 'use strict'
 
 const RelyingParty = require('@solid/oidc-rp')
-const Session = require('@solid/oidc-rp/lib/Session')
+const Session = require('@solid/oidc-rp/src/Session')
 const storage = require('./storage')
 
 // URI parameter types
