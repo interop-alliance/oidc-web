@@ -186,7 +186,8 @@ class OIDCWebClient {
         popToken: this.popToken,
         authenticate: {
           redirect_uri: redirectUri,
-          response_type: 'id_token token'
+          response_type: 'id_token token',
+          scope: ['openid']
         }
       },
       store: this.store
