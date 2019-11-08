@@ -79,7 +79,8 @@ describe('OIDCWebClient', () => {
         popToken: true,
         authenticate: {
           redirect_uri: redirectUri,
-          response_type: 'id_token token'
+          response_type: 'id_token token',
+          scope: ['openid']
         }
       }
     }
@@ -116,7 +117,8 @@ describe('OIDCWebClient', () => {
           popToken: true,
           authenticate: {
             redirect_uri: currentLocation,
-            response_type: 'id_token token'
+            response_type: 'id_token token',
+            scope: ['openid']
           }
         }
       }

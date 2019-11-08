@@ -68,13 +68,13 @@
     "dirty-chai": "^2.0.1",
     "jsdoc": "^3.6.3",
     "localstorage-memory": "^1.0.3",
-    "mocha": "^6.2.1",
+    "mocha": "^6.2.2",
     "nyc": "^14.1.1",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
     "standard": "^14.3.1",
     "webpack": "^4.41.2",
-    "whatwg-url": "^7.0.0"
+    "whatwg-url": "^7.1.0"
   },
   "standard": {
     "globals": [
