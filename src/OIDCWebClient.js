@@ -1,7 +1,7 @@
 'use strict'
 
 const RelyingParty = require('@solid/oidc-rp')
-const Session = require('@solid/oidc-rp/lib/Session')
+const Session = require('@solid/oidc-rp/src/Session')
 const storage = require('./storage')
 
 // URI parameter types
@@ -186,7 +186,8 @@ class OIDCWebClient {
         popToken: this.popToken,
         authenticate: {
           redirect_uri: redirectUri,
-          response_type: 'id_token token'
+          response_type: 'id_token token',
+          scope: ['openid']
         }
       },
       store: this.store
