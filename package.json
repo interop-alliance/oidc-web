@@ -57,7 +57,7 @@
     }
   ],
   "dependencies": {
-    "@solid/oidc-rp": "solid/oidc-rp#remove-json-document"
+    "@solid/oidc-rp": "^0.10.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
