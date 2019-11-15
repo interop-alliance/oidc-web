@@ -4,7 +4,7 @@
   "engines": {
     "node": ">= 10"
   },
-  "description": "Authentication library for Solid client based on OAuth2/OpenID Connect",
+  "description": "Authentication library for Solid clients based on OAuth2/OpenID Connect",
   "main": "./src/index.js",
   "files": [
     "src",
@@ -32,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/solid/oidc-web"
+    "url": "https://github.com/interop-alliance/oidc-web"
   },
   "keywords": [
     "authentication",
@@ -47,9 +47,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/solid/oidc-web/issues"
+    "url": "https://github.com/interop-alliance/oidc-web/issues"
   },
-  "homepage": "https://github.com/solid/oidc-web",
+  "homepage": "https://github.com/interop-alliance/oidc-web",
   "contributors": [
     {
       "name": "Dmitri Zagidulin",
